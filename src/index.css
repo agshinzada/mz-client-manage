@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .active {
+    @apply bg-white font-semibold !text-black;
+  }
+
+  .active:hover {
+    @apply !bg-white;
+  }
+}
+
+.ant-btn-primary {
+  background-color: #1677ff !important;
+}
+
+.ant-btn,
+.ant-space-item {
+  display: flex;
+  align-items: center !important;
+  justify-content: center;
+}
+
+.ant-modal {
+  @apply w-fit !important;
+  @apply min-w-[500px] !important;
+  @apply py-5 !important;
+}
