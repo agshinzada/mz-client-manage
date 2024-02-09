@@ -22,6 +22,7 @@ import { useIdleTimer } from "react-idle-timer";
 import DeliveryPage from "./DeliveryPage";
 import BulkClient from "./BulkClient";
 import ProductPage from "./ProductPage";
+import RiskPage from "./RiskPage";
 
 function Dashboard() {
   const { adminAuth } = useAdmin();
@@ -87,11 +88,11 @@ function Dashboard() {
   return (
     <div className="bg-gray-200 relative">
       <aside
-        className="w-64 bg-gray-700 h-full  absolute left-0 top-0"
+        className="w-64 bg-gray-700 h-full absolute left-0 top-0 overflow-y-auto"
         ref={asideRef}
       >
         <h1 className="px-7 py-4 text-xl text-gray-200  border-b border-b-slate-500">
-          Dashboard
+          İDARƏETMƏ
         </h1>
         <div className="text-gray-200 px-7 py-4 flex gap-2 items-center border-b border-b-slate-500">
           <UserOutlined style={{ fontSize: "30px" }} />
@@ -176,6 +177,13 @@ function Dashboard() {
             <CaretRightOutlined style={{ fontSize: "20px" }} />
             <span>Məhsul düzəlişi</span>
           </NavLink>
+          <NavLink
+            to={"/dashboard/risks"}
+            className="flex items-center gap-2 px-5 py-3 font-semibold text-gray-200 hover:pl-7 hover:bg-gray-600 rounded-sm transition-all cursor-pointer"
+          >
+            <CaretRightOutlined style={{ fontSize: "20px" }} />
+            <span>Risk düzəlişi</span>
+          </NavLink>
         </ul>
       </aside>
       <nav className="w-full h-[60px] bg-gray-50">
@@ -213,6 +221,7 @@ function Dashboard() {
             <Route path="delivery" element={<DeliveryPage />} />
             <Route path="bulkclient" element={<BulkClient />} />
             <Route path="products" element={<ProductPage />} />
+            <Route path="risks" element={<RiskPage />} />
           </Routes>
         </div>
       </main>

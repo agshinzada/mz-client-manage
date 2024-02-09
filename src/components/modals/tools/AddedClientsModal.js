@@ -1,9 +1,9 @@
 import { Modal } from "antd";
 import { memo, useState } from "react";
 import { toast } from "react-hot-toast";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../../context/AuthContext";
 
-function ClientsModal({ isOpen, setIsOpen, type, title, rut }) {
+function AddedClientsModal({ isOpen, setIsOpen, type, title, rut }) {
   const { user } = useAuth();
 
   const [data, setData] = useState([]);
@@ -185,4 +185,4 @@ function ClientsModal({ isOpen, setIsOpen, type, title, rut }) {
   );
 }
 
-export default memo(ClientsModal);
+export default memo(AddedClientsModal);

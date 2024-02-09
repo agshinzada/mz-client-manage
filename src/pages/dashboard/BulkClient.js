@@ -12,6 +12,7 @@ import {
 import writeXlsxFile from "write-excel-file";
 import TextArea from "antd/es/input/TextArea";
 import { fetchRoutes } from "../../services/rootService";
+import ErrorModal from "../../components/modals/ErrorModal";
 
 function BulkClient() {
   const { adminAuth } = useAdmin();
@@ -29,8 +30,13 @@ function BulkClient() {
   const [createDisabled, setCreateDisabled] = useState(true);
   const [loadingCreate, setLoadingCreate] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+
   const [checkModalIsOpen, setCheckModalIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  // ERROR MODAL
+  const [errorIsOpen, setErrorIsOpen] = useState(false);
+  const [errorData, setErrorData] = useState(null);
 
   const columns = [
     {
@@ -209,17 +215,13 @@ function BulkClient() {
         userRef: adminAuth.REF,
         token: adminAuth.TOKEN,
       });
-      if (res.status === 200 && res.statusText === "OK") {
-        message.success("Müştərilər uğurla əlavə edildi!");
+      if (res) {
         setLoadingCreate(false);
         setCreateDisabled(true);
-      } else if (res.status === 500) {
-        console.log(await res.json());
-        message.error("Sistem xətası!");
       }
     } catch (error) {
-      message.error("Sistem xətası!");
-      console.log(error);
+      setLoadingCreate(false);
+      setCreateDisabled(true);
     }
   }
 
@@ -301,7 +303,12 @@ function BulkClient() {
               Excel yüklə
             </Button>
           </div>
-          <Table dataSource={tableData} columns={columns} loading={loading} />
+          <Table
+            dataSource={tableData}
+            columns={columns}
+            loading={loading}
+            rowKey={(record) => record.LOGICALREF}
+          />
         </div>
         <div className="flex gap-2 justify-center mt-4">
           <Button
@@ -376,6 +383,11 @@ function BulkClient() {
           </Button>
         </div>
       </Modal>
+      <ErrorModal
+        isOpen={errorIsOpen}
+        setIsOpen={setErrorIsOpen}
+        data={errorData}
+      />
     </div>
   );
 }

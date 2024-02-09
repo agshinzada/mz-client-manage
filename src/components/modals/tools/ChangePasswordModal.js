@@ -1,9 +1,9 @@
 import { memo, useState } from "react";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../../context/AuthContext";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { Modal } from "antd";
-import { fetchChangePass, fetchLogin } from "../../services/authService";
+import { fetchChangePass, fetchLogin } from "../../../services/authService";
 import Swal from "sweetalert2";
 
 function ChangePasswordModal({ isOpen, setIsOpen }) {

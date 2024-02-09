@@ -1,10 +1,11 @@
 import { Modal } from "antd";
 import { useState } from "react";
-import { fetchRoutesBySearch } from "../../services/rootService";
+import { fetchRoutesBySearch } from "../../../services/rootService";
 import { toast } from "react-hot-toast";
 
-function RoutesModal({ isOpen, setIsOpen, routes, setRoutes }) {
+function RoutesModal({ isOpen, setIsOpen }) {
   const [value, setValue] = useState(null);
+  const [routes, setRoutes] = useState(null);
 
   const handleRoute = async (e) => {
     e.preventDefault();

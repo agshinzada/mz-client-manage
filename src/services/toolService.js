@@ -1,3 +1,5 @@
+import { notification } from "antd";
+
 export const fetchLastClientCode = async (sticker, token) => {
   try {
     const res = await fetch(
@@ -29,7 +31,16 @@ export const fetchLastStickerCode = async (token) => {
         method: "POST",
       }
     );
-    return res;
+    if (res.status === 200 && res.statusText === "OK") {
+      const { code } = await res.json();
+      return code;
+    } else {
+      notification.error({
+        message: "Stiker əlavəsi",
+        description: "Sistem xətası baş verdi!",
+        placement: "topRight",
+      });
+    }
   } catch (error) {
     throw error;
   }
