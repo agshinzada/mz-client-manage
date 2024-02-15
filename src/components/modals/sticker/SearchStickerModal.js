@@ -4,7 +4,7 @@ import {
   fetchStickerBySearch,
   fetchStickerHierarchy,
   fetchUpdateNameBySticker,
-  fetchUpdateStickerTax,
+  fetchUpdateTaxBySticker,
 } from "../../../services/stickerService";
 import EditStickerFieldModal from "./EditStickerFieldModal";
 import Swal from "sweetalert2";
@@ -105,11 +105,7 @@ function SearchStickerModal({ isOpen, setIsOpen }) {
     let res;
     Swal.fire({
       title: "Düzəliş təsdiqi",
-      text: `${
-        selectedField === "tax"
-          ? "Stikerin VÖEN məlumatı dəyişəcək"
-          : "Stiker və müştərilərinin məlumatları dəyişəcək"
-      }`,
+      text: "Stiker və müştərilərinin məlumatları dəyişəcək",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
@@ -118,7 +114,7 @@ function SearchStickerModal({ isOpen, setIsOpen }) {
     }).then(async (result) => {
       if (result.isConfirmed) {
         if (selectedField === "tax") {
-          res = await fetchUpdateStickerTax({
+          res = await fetchUpdateTaxBySticker({
             tax: value,
             sticker: selectedRecord,
             token: user.TOKEN,
@@ -147,12 +143,7 @@ function SearchStickerModal({ isOpen, setIsOpen }) {
         footer={false}
         title={"Axtarış"}
       >
-        <Form
-          layout="vertical"
-          // onFinish={handleSearch}
-          form={form}
-          onValuesChange={handleSearch}
-        >
+        <Form layout="vertical" form={form} onValuesChange={handleSearch}>
           <Form.Item
             name={"name"}
             label="Stiker kod və ya ad"
@@ -188,12 +179,6 @@ function SearchStickerModal({ isOpen, setIsOpen }) {
         setIsOpen={setHierarchyIsOpen}
         data={hierarchyData}
       />
-      {/* <ClientHierarchy
-        sticker={hierarchySticker}
-        clients={hierarchyClients}
-        isOpen={clientHierarchyIsOpen}
-        setIsOpen={setClientHierarchyIsOpen}
-      /> */}
     </>
   );
 }

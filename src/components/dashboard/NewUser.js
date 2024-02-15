@@ -156,6 +156,7 @@ function NewUser({ isOpen, setIsOpen }) {
                 </option>
                 <option value="ADMIN">ADMIN</option>
                 <option value="USER">USER</option>
+                <option value="MODERATOR">MODERATOR</option>
               </select>
             </div>
           </div>

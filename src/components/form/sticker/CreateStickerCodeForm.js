@@ -58,11 +58,11 @@ function CreateStickerCodeForm() {
             }
             fieldNames={{
               label: "NAME",
-              value: "CODE_ID",
+              value: "ID",
             }}
             size="large"
             onSelect={(e) => {
-              const regName = regions.find((item) => item.CODE_ID === e).NAME;
+              const regName = regions.find((item) => item.ID === e).NAME;
               setRegionName(regName);
               setCreateStatus(false);
               setDisabled(true);

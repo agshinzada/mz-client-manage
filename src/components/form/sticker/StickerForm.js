@@ -20,6 +20,7 @@ function StickerForm() {
     data.regionName = regionName;
     if (selectedGroupCode) {
       data.PARENTCLREF = selectedGroupCode.LOGICALREF;
+      data.LOWLEVELCODES2 = 0;
       data.LOWLEVELCODES1 = selectedGroupCode.LOWLEVELCODES1;
       data.LOWLEVELCODES3 = 0;
     } else {
@@ -28,6 +29,11 @@ function StickerForm() {
       data.LOWLEVELCODES2 = 0;
       data.LOWLEVELCODES3 = 0;
     }
+    console.log({
+      sticker: data,
+      userRef: user.REF,
+      token: user.TOKEN,
+    });
 
     const res = await fetchNewSticker({
       sticker: data,

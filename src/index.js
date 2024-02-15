@@ -8,7 +8,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import AdminLoginPage from "./pages/AdminLoginPage";
 import PageNotFound from "./pages/PageNotFound";
-import AdminRoute from "./components/routes/AdminRoute";
+import DashboardRoute from "./components/routes/DashboardRoute";
 import Dashboard from "./pages/dashboard/Dashboard";
 import { AdminProvider } from "./context/AdminContext";
 import { GlobalProvider } from "./context/GlobalContext";
@@ -33,11 +33,12 @@ root.render(
               <Route
                 path="/dashboard/*"
                 element={
-                  <AdminRoute>
+                  <DashboardRoute>
                     <Dashboard />
-                  </AdminRoute>
+                  </DashboardRoute>
                 }
               />
+
               <Route
                 path="/dashboard/auth/login"
                 index

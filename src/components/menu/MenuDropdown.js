@@ -58,7 +58,10 @@ function MenuDropdown() {
     },
     {
       key: "4",
-      disabled: user.ROLE.trim() === "ADMIN" ? false : true,
+      disabled:
+        user.ROLE.trim() === "ADMIN" || user.ROLE.trim() === "MODERATOR"
+          ? false
+          : true,
       label: "İdarəetmə",
     },
   ];

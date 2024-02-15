@@ -24,6 +24,7 @@ function BulkClient() {
   const [checkedCodes, setCheckedCodes] = useState([]);
 
   const [brandCode, setBrandCode] = useState(null);
+  const [brandName, setBrandName] = useState(null);
   const [brandId, setBrandId] = useState(null);
   const [routeCode, setRouteCode] = useState(null);
 
@@ -108,7 +109,7 @@ function BulkClient() {
         await writeXlsxFile(tableData, {
           schema,
           filePath: "/export/exportData.xlsx",
-          fileName: "exportData.xlsx",
+          fileName: `${routeCode}-${brandName}.xlsx`,
         });
       } else {
         message.error("Məlumat tapılmadı!");
@@ -134,7 +135,7 @@ function BulkClient() {
         await writeXlsxFile(checkedCodes, {
           schema,
           filePath: "/export/exportDataChecked.xlsx",
-          fileName: "exportDataChecked.xlsx",
+          fileName: `DUPL-${routeCode}-${brandName}.xlsx`,
         });
       } else {
         message.error("Məlumat tapılmadı!");
@@ -173,7 +174,6 @@ function BulkClient() {
         routeCode,
         stickers,
       });
-      console.log(data);
       setTableData(data);
       setLoading(false);
     } catch (error) {
@@ -252,6 +252,7 @@ function BulkClient() {
               onChange={(e) => {
                 setBrandId(brands.find((item) => item.NAME === e.label).NR);
                 setBrandCode(e.value);
+                setBrandName(e.label);
               }}
             >
               {brands.map((option) => (

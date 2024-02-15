@@ -20,7 +20,7 @@ function AdminLoginPage() {
       const res = await fetchLogin(username, hashPassword);
       if (res.status === 200 && res.statusText === "OK") {
         const data = await res.json();
-        if (data.ROLE.trim() === "ADMIN") {
+        if (data.ROLE.trim() === "ADMIN" || data.ROLE.trim() === "MODERATOR") {
           setWarningDiv(false);
           setSuccessDiv(true);
           setTimeout(() => {

@@ -1,14 +1,14 @@
 import { Navigate } from "react-router-dom";
 import { useAdmin } from "../../context/AdminContext";
 
-function AdminRoute({ children }) {
+function ModeratorRoute({ children }) {
   const { adminAuth } = useAdmin();
 
-  if (adminAuth.ROLE === "ADMIN") {
+  if (adminAuth.ROLE === "MODERATOR") {
     return children;
   } else {
     return <Navigate to="/auth/login" />;
   }
 }
 
-export default AdminRoute;
+export default ModeratorRoute;

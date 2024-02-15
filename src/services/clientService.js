@@ -177,3 +177,91 @@ export const fetchPostBulkClients = async (data) => {
     throw error;
   }
 };
+export const fetchUpdateClientGeneralLimit = async (data, token) => {
+  try {
+    const res = await fetch(
+      `${process.env.REACT_APP_API}/clients/limit?p=update&&l=general&&token=${token}`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    if (res.status === 200 && res.statusText === "OK") {
+      return true;
+    } else {
+      throw await res.json();
+    }
+  } catch (error) {
+    throw error;
+  }
+};
+export const fetchUpdateClientMinLimit = async (data, token) => {
+  try {
+    const res = await fetch(
+      `${process.env.REACT_APP_API}/clients/limit?p=update&&l=min&&token=${token}`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    if (res.status === 200 && res.statusText === "OK") {
+      return true;
+    } else {
+      throw await res.json();
+    }
+  } catch (error) {
+    throw error;
+  }
+};
+export const fetchUpdateClientDayLimit = async (data, token) => {
+  try {
+    const res = await fetch(
+      `${process.env.REACT_APP_API}/clients/limit?p=update&&l=day&&token=${token}`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    if (res.status === 200 && res.statusText === "OK") {
+      return true;
+    } else {
+      throw await res.json();
+    }
+  } catch (error) {
+    throw error;
+  }
+};
+export const fetchInsertClientLimit = async (data, token) => {
+  try {
+    const res = await fetch(
+      `${process.env.REACT_APP_API}/clients/limit?p=insert&&token=${token}`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    if (res.status === 200 && res.statusText === "OK") {
+      return true;
+    } else {
+      throw await res.json();
+    }
+  } catch (error) {
+    throw error;
+  }
+};

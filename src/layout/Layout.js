@@ -1,12 +1,12 @@
 import { Toaster } from "react-hot-toast";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
-import { encryptStorage } from "./utils/storage";
+import { encryptStorage } from "../utils/storage";
 import { useIdleTimer } from "react-idle-timer";
 import { Button } from "antd";
 import Swal from "sweetalert2";
-import { useAuth } from "./context/AuthContext";
-import MenuDropdown from "./components/menu/MenuDropdown";
-import EditDropdown from "./components/menu/EditDropdown";
+import { useAuth } from "../context/AuthContext";
+import MenuDropdown from "../components/menu/MenuDropdown";
+import EditDropdown from "../components/menu/EditDropdown";
 
 function Layout() {
   const navigate = useNavigate();

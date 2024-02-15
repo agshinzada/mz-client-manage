@@ -66,3 +66,45 @@ export const fetchBrandCheck = async (data) => {
     throw error;
   }
 };
+
+export const fetchClientRefs = async (data) => {
+  try {
+    const res = await fetch(`${process.env.REACT_APP_API}/tools/refs`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    if (res.status === 200 && res.statusText === "OK") {
+      const data = await res.json();
+      return data;
+    } else if (res.status === 500) {
+      console.log(await res.json());
+    }
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const fetchCheckExistRefs = async (data) => {
+  try {
+    const res = await fetch(`${process.env.REACT_APP_API}/tools/refs?p=exist`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    if (res.status === 200 && res.statusText === "OK") {
+      const data = await res.json();
+      return data;
+    } else if (res.status === 500) {
+      console.log(await res.json());
+    }
+  } catch (error) {
+    throw error;
+  }
+};

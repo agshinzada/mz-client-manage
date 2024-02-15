@@ -55,7 +55,7 @@ export const fetchStickerHierarchy = async (data) => {
   }
 };
 
-export const fetchUpdateStickerTax = async (data) => {
+export const fetchUpdateTaxBySticker = async (data) => {
   try {
     const res = await fetch(
       `${process.env.REACT_APP_API}/stickers/update/tax`,

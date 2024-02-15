@@ -102,12 +102,12 @@ function CreateClientCodeForm() {
             }
             fieldNames={{
               label: "NAME",
-              value: "ROOT_ID",
+              value: "ID",
             }}
             size="large"
             onSelect={(e) => {
-              const regName = regions.find((item) => item.ROOT_ID === e).NAME;
-              const regId = regions.find((item) => item.ROOT_ID === e).CODE_ID;
+              const regName = regions.find((item) => item.ID === e).NAME;
+              const regId = regions.find((item) => item.ID === e).CODE_ID;
               setRegionName(regName);
               setRegionId(regId);
               setCreateStatus(false);

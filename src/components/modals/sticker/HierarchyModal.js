@@ -3,12 +3,17 @@ import { Button, Modal, Space, Table, Tag } from "antd";
 function HierarchyModal({ isOpen, setIsOpen, data }) {
   const columns = [
     {
-      title: "Kod",
+      title: "RUT",
+      dataIndex: "RUT",
+      key: "RUT",
+    },
+    {
+      title: "KOD",
       dataIndex: "CODE",
       key: "CODE",
     },
     {
-      title: "Ad",
+      title: "AD",
       dataIndex: "NAME",
       key: "NAME",
     },
@@ -18,7 +23,7 @@ function HierarchyModal({ isOpen, setIsOpen, data }) {
       key: "TAX",
     },
     {
-      title: "Status",
+      title: "STATUS",
       dataIndex: "ACTIVE",
       key: "ACTIVE",
       render: (_, record) => (

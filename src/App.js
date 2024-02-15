@@ -9,7 +9,7 @@ import { useGlobal } from "./context/GlobalContext";
 import { ClientProvider } from "./context/ClientContext";
 import { StickerProvider } from "./context/StickerContext";
 import { fetchGroupCodes } from "./services/groupService";
-import Layout from "./Layout";
+import Layout from "./layout/Layout";
 
 function App() {
   const { setTradeGroup, setRegions, setGroupCodes } = useGlobal();
