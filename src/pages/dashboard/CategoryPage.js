@@ -219,7 +219,12 @@ function CategoryPage() {
         </div>
       </div>
 
-      <Table columns={columns} dataSource={category} loading={wait} />
+      <Table
+        columns={columns}
+        dataSource={category}
+        loading={wait}
+        rowKey={(record) => record.ID}
+      />
       <NewCategory isOpen={isOpenAdd} setIsOpen={setIsOpenAdd} />
       <Modal
         open={isOpen}

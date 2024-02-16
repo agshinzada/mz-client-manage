@@ -36,13 +36,13 @@ function DiscountPage() {
     },
     {
       title: "Code",
-      dataIndex: "value",
-      key: "value",
+      dataIndex: "VALUE",
+      key: "VALUE",
     },
     {
       title: "Endirim",
-      dataIndex: "label",
-      key: "label",
+      dataIndex: "LABEL",
+      key: "LABEL",
     },
 
     {
@@ -181,7 +181,7 @@ function DiscountPage() {
       <div className="flex mb-3 mt-5 justify-between items-end">
         <form className="flex gap-1" onSubmit={handleSearch}>
           <Input
-            placeholder="Brend adı"
+            placeholder="Endirim adı"
             className="w-48 h-fit"
             onChange={(e) => setSearchValue(e.target.value)}
           />
@@ -214,7 +214,12 @@ function DiscountPage() {
         </div>
       </div>
 
-      <Table columns={columns} dataSource={discounts} loading={wait} />
+      <Table
+        columns={columns}
+        dataSource={discounts}
+        loading={wait}
+        rowKey={(record) => record.ID}
+      />
       <NewDiscount isOpen={isOpenAdd} setIsOpen={setIsOpenAdd} />
       <Modal
         open={isOpen}

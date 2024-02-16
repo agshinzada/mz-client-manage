@@ -30,7 +30,7 @@ function DashboardLayout() {
 
   useIdleTimer({
     onIdle,
-    timeout: 600_000,
+    timeout: 15000_000,
     throttle: 500,
   });
 

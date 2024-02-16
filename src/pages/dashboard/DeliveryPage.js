@@ -88,7 +88,6 @@ function DeliveryPage() {
     try {
       const data = await fetchDelivery();
       setDelivery(data);
-      console.log(data);
       setWait(false);
     } catch (error) {}
   }
@@ -221,7 +220,12 @@ function DeliveryPage() {
         </div>
       </div>
 
-      <Table columns={columns} dataSource={delvery} loading={wait} />
+      <Table
+        columns={columns}
+        dataSource={delvery}
+        loading={wait}
+        rowKey={(record) => record.ID}
+      />
       <NewDelivery isOpen={isOpenAdd} setIsOpen={setIsOpenAdd} />
       <Modal
         open={isOpen}

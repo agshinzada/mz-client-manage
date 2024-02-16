@@ -41,13 +41,13 @@ function CampaignPage() {
     },
     {
       title: "Code",
-      dataIndex: "label",
-      key: "label",
+      dataIndex: "CODE",
+      key: "CODE",
     },
     {
       title: "Value",
-      dataIndex: "value",
-      key: "value",
+      dataIndex: "VALUE",
+      key: "VALUE",
     },
     {
       title: "Explanation",
@@ -259,6 +259,7 @@ function CampaignPage() {
                   key={id}
                   dataSource={campaign[data]}
                   loading={wait}
+                  rowKey={(record) => record.ID}
                 />
               </div>
             ),

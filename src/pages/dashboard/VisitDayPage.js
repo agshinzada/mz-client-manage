@@ -206,7 +206,12 @@ function VisitDayPage() {
         </div>
       </div>
 
-      <Table columns={columns} dataSource={visits} loading={wait} />
+      <Table
+        columns={columns}
+        dataSource={visits}
+        loading={wait}
+        rowKey={(record) => record.ID}
+      />
       <Modal
         open={isOpen}
         onCancel={() => {

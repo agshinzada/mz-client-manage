@@ -38,6 +38,7 @@ function RiskPage() {
 
   const submitRisk = async () => {
     try {
+      setLoading(true);
       let arr = [],
         updateData = [],
         insertData = [],
@@ -71,6 +72,23 @@ function RiskPage() {
       insertData = arr.filter((item) =>
         existRefs.every((ex) => ex.ref !== item.ref)
       );
+
+      console.group("Main");
+      console.log(arr);
+      console.groupEnd();
+
+      console.group("Exist");
+      console.log(existRefs);
+      console.groupEnd();
+
+      console.group("Update");
+      console.log(updateData);
+      console.groupEnd();
+
+      console.group("Insert");
+      console.log(insertData);
+      console.groupEnd();
+
       let res;
       if (updateData.length > 0) {
         if (!generalLimitdisabled) {
@@ -97,24 +115,11 @@ function RiskPage() {
           placement: "topRight",
         });
         form.resetFields();
-        console.group("Main");
-        console.log(arr);
-        console.groupEnd();
-
-        console.group("Exist");
-        console.log(existRefs);
-        console.groupEnd();
-
-        console.group("Update");
-        console.log(updateData);
-        console.groupEnd();
-
-        console.group("Insert");
-        console.log(insertData);
-        console.groupEnd();
+        setLoading(false);
       }
     } catch (error) {
       console.log(error);
+      setLoading(false);
     }
   };
   return (
@@ -244,6 +249,7 @@ function RiskPage() {
             disabled={
               generalLimitdisabled && minLimitDisabled && dayLimitDisabled
             }
+            loading={loading}
           >
             Yüklə
           </Button>

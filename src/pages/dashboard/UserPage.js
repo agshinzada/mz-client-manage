@@ -249,7 +249,12 @@ function UserPage() {
         </div>
       </div>
 
-      <Table columns={columns} dataSource={users} loading={wait} />
+      <Table
+        columns={columns}
+        dataSource={users}
+        loading={wait}
+        rowKey={(record) => record.ID}
+      />
       <NewUser isOpen={isOpenAdd} setIsOpen={setIsOpenAdd} />
       <Modal
         open={isOpen}

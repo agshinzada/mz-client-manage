@@ -227,7 +227,12 @@ function BrandPage() {
         </div>
       </div>
 
-      <Table columns={columns} dataSource={brands} loading={wait} />
+      <Table
+        columns={columns}
+        dataSource={brands}
+        loading={wait}
+        rowKey={(record) => record.ID}
+      />
       <NewBrand isOpen={isOpenAdd} setIsOpen={setIsOpenAdd} />
       <Modal
         open={isOpen}
