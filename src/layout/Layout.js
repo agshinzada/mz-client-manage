@@ -51,13 +51,13 @@ function Layout() {
           <div className="flex gap-4 bg-gray-500 rounded-lg p-1.5">
             <NavLink
               to={"/"}
-              className="text-md text-slate-200 w-fit px-3 py-1.5 rounded-lg"
+              className="text-md text-slate-200 w-fit px-8 py-1.5 rounded-lg navBtn"
             >
               Müştəri
             </NavLink>
             <NavLink
               to={"/sticker"}
-              className="text-md text-slate-200 w-fit px-3 py-1.5 rounded-lg"
+              className="text-md text-slate-200 w-fit px-8 py-1.5 rounded-lg navBtn"
             >
               Stiker
             </NavLink>

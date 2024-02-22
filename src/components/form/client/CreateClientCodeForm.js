@@ -19,8 +19,9 @@ function CreateClientCodeForm() {
     setRegionName,
     setCreateStatus,
     setRegionId,
-    regionId,
+    regionCodeId,
     setDisabled,
+    setRegionCodeId,
   } = useClient();
   const { regions } = useGlobal();
 
@@ -57,7 +58,7 @@ function CreateClientCodeForm() {
   const submitCode = async () => {
     try {
       setLoading(true);
-      const code = `211${regionId}.${brandCode}.${clientTypeCode}.${selectedSticker.CODE}`;
+      const code = `211${regionCodeId}.${brandCode}.${clientTypeCode}.${selectedSticker.CODE}`;
       setTimeout(() => {
         setCreatedCode(code);
         setLoading(false);
@@ -107,9 +108,11 @@ function CreateClientCodeForm() {
             size="large"
             onSelect={(e) => {
               const regName = regions.find((item) => item.ID === e).NAME;
-              const regId = regions.find((item) => item.ID === e).CODE_ID;
+              const regId = regions.find((item) => item.ID === e).ROOT_ID;
+              const regCodeId = regions.find((item) => item.ID === e).CODE_ID;
               setRegionName(regName);
               setRegionId(regId);
+              setRegionCodeId(regCodeId);
               setCreateStatus(false);
               setDisabled(true);
             }}

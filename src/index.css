@@ -2,16 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
-  .active {
-    @apply bg-white font-semibold !text-black;
-  }
-
-  .active:hover {
-    @apply !bg-white;
-  }
-}
-
 .ant-btn-primary {
   background-color: #1677ff !important;
 }
@@ -27,4 +17,14 @@
   @apply w-fit !important;
   @apply min-w-[500px] !important;
   @apply py-5 !important;
+}
+
+.active {
+  background-color: white;
+  font-weight: 500;
+  color: black;
+}
+
+.navBtn:not(.active):hover {
+  background-color: rgb(80, 79, 79);
 }

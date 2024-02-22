@@ -35,6 +35,7 @@ function ClientForm() {
         dayLimit: selectedSticker.DAYLIMIT,
         tradeCode: selectedSticker.TRADINGGRP,
         district: selectedSticker.DISTRICT,
+        taxObjectCode: selectedSticker.TAXOFFICE,
       });
     }
   }, [createStatus]);

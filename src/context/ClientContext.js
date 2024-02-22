@@ -5,6 +5,7 @@ const Context = createContext();
 export const ClientProvider = ({ children }) => {
   const [brandId, setBrandId] = useState(null);
   const [regionId, setRegionId] = useState(null);
+  const [regionCodeId, setRegionCodeId] = useState(null);
   const [regionName, setRegionName] = useState(null);
   const [clientData, setClientData] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -32,6 +33,8 @@ export const ClientProvider = ({ children }) => {
     setCreateStatus,
     disabled,
     setDisabled,
+    regionCodeId,
+    setRegionCodeId,
   };
 
   return <Context.Provider value={data}>{children}</Context.Provider>;
