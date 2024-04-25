@@ -12,6 +12,7 @@ import { useIdleTimer } from "react-idle-timer";
 import { useRef, useState } from "react";
 import { useAdmin } from "../context/AdminContext";
 import AsideBox from "../components/dashboard/AsideBox";
+import MainFooter from "../components/Footer";
 
 function DashboardLayout() {
   const { setAdminAuth } = useAdmin();
@@ -100,6 +101,7 @@ function DashboardLayout() {
       <main className="min-h-screen p-3">
         <div className="ml-64" ref={mainRef}>
           <Outlet />
+          <MainFooter />
         </div>
       </main>
       <Toaster

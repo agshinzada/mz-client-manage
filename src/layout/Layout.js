@@ -7,6 +7,8 @@ import Swal from "sweetalert2";
 import { useAuth } from "../context/AuthContext";
 import MenuDropdown from "../components/menu/MenuDropdown";
 import EditDropdown from "../components/menu/EditDropdown";
+import { Footer } from "antd/es/layout/layout";
+import MainFooter from "../components/Footer";
 
 function Layout() {
   const navigate = useNavigate();
@@ -83,6 +85,7 @@ function Layout() {
         <div className="w-full h-fit bg-white dark:bg-gray-700 rounded-xl shadow-md px-8 py-10">
           <Outlet />
         </div>
+        <MainFooter />
       </div>
 
       <Toaster

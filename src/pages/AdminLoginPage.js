@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { encryptStorage } from "../utils/storage";
 import { fetchLogin } from "../services/authService";
 import { useAdmin } from "../context/AdminContext";
+import MainFooter from "../components/Footer";
 
 function AdminLoginPage() {
   const { setAdminAuth } = useAdmin();
@@ -50,7 +51,7 @@ function AdminLoginPage() {
   };
 
   return (
-    <div className="flex items-center h-screen w-full bg-slate-100">
+    <div className="grid grid-rows-1 items-center h-screen w-full bg-slate-100">
       <div className="w-full bg-white rounded shadow-lg p-8 m-4 md:max-w-sm md:mx-auto">
         <span className="block w-full text-xl uppercase font-bold mb-4">
           GİRİŞ
@@ -111,6 +112,7 @@ function AdminLoginPage() {
           </button>
         </form>
       </div>
+      <MainFooter />
     </div>
   );
 }

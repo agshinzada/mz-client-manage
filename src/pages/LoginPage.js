@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { encryptStorage } from "../utils/storage";
 import { fetchLogin } from "../services/authService";
+import MainFooter from "../components/Footer";
 
 function LoginPage() {
   const { setUser } = useAuth();
@@ -44,8 +45,8 @@ function LoginPage() {
   };
 
   return (
-    <div className="flex items-center h-screen w-full bg-slate-100">
-      <div className="w-full bg-white rounded shadow-lg p-8 m-4 md:max-w-sm md:mx-auto">
+    <div className="grid-rows-1 flex-col grid items-center h-screen w-full bg-slate-100">
+      <div className="w-full bg-white rounded shadow-lg p-8 m-4 md:max-w-sm md:mx-auto self-center">
         <span className="block w-full text-xl uppercase font-bold mb-4">
           GİRİŞ
         </span>
@@ -105,6 +106,7 @@ function LoginPage() {
           </button>
         </form>
       </div>
+      <MainFooter />
     </div>
   );
 }
