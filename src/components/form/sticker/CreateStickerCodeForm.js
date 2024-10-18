@@ -1,38 +1,43 @@
-import { Button, Form, Input, Select } from "antd";
+import { Button, Form, Select, Space } from "antd";
 import { useSticker } from "../../../context/StickerContext";
 import { useGlobal } from "../../../context/GlobalContext";
-import { CloseOutlined, UnorderedListOutlined } from "@ant-design/icons";
-import { useState } from "react";
-import GroupCodeModal from "../../modals/groupCode/GroupCodeModal";
+import { useEffect, useState } from "react";
 import { fetchLastStickerCode } from "../../../services/toolService";
 import { useAuth } from "../../../context/AuthContext";
+import { fetchGroupCodes } from "../../../services/groupService";
 
 function CreateStickerCodeForm() {
   const [form] = Form.useForm();
-  const { regions, setLoading } = useGlobal();
+  const { regions, setLoading, loading } = useGlobal();
   const {
-    selectedGroupCode,
     setRegionName,
     setDisabled,
     setCreateStatus,
     setCreatedCode,
     setSelectedGroupCode,
   } = useSticker();
-  const [isOpenGroupCode, setIsOpenGroupCode] = useState(false);
+  const [groupCodes, setGroupCodes] = useState([]);
   const { user } = useAuth();
 
   const handleCode = async () => {
     setLoading(true);
-    const code = await fetchLastStickerCode(user.TOKEN);
-    setTimeout(() => {
-      if (code) {
-        setCreateStatus(true);
-        setDisabled(false);
-        setLoading(false);
-        setCreatedCode(code);
-      }
-    }, 700);
+    const { code } = await fetchLastStickerCode(user.TOKEN);
+    if (code) {
+      setCreateStatus(true);
+      setDisabled(false);
+      setLoading(false);
+      setCreatedCode(code);
+    }
   };
+
+  async function getGroupCodes() {
+    const res = await fetchGroupCodes();
+    setGroupCodes(res);
+  }
+
+  useEffect(() => {
+    getGroupCodes();
+  }, []);
 
   return (
     <>
@@ -40,7 +45,7 @@ function CreateStickerCodeForm() {
         form={form}
         layout="vertical"
         onFinish={handleCode}
-        className="flex gap-5 items-center"
+        className="flex flex-col items-center"
       >
         <Form.Item
           name={"region"}
@@ -60,7 +65,7 @@ function CreateStickerCodeForm() {
               label: "NAME",
               value: "ID",
             }}
-            size="large"
+            size="medium"
             onSelect={(e) => {
               const regName = regions.find((item) => item.ID === e).NAME;
               setRegionName(regName);
@@ -75,7 +80,32 @@ function CreateStickerCodeForm() {
           className="flex flex-col w-full"
           rules={[{ message: "Stiker daxil edin" }]}
         >
-          <div className="flex relative">
+          <Select
+            showSearch
+            placeholder="Seç"
+            optionFilterProp="children"
+            filterOption={false}
+            options={groupCodes}
+            fieldNames={{
+              label: "CODE",
+              value: "CODE",
+            }}
+            allowClear={true}
+            size="middle"
+            optionRender={(option) => (
+              <Space>
+                <span role="img" aria-label={option.label}>
+                  {option.data.CODE} -
+                </span>
+                {option.data.DEFINITION_}
+              </Space>
+            )}
+            onChange={(value, option) => {
+              setSelectedGroupCode(option);
+              setDisabled(true);
+            }}
+          />
+          {/* <div className="flex relative">
             <Input size="large" placeholder={selectedGroupCode.CODE} disabled />
             <Button
               icon={<UnorderedListOutlined />}
@@ -88,20 +118,21 @@ function CreateStickerCodeForm() {
               className="absolute top-[13px] right-[40px] text-md cursor-pointer"
               onClick={() => setSelectedGroupCode(false)}
             />
-          </div>
+          </div> */}
         </Form.Item>
-        <Form.Item className="m-0">
+        <Form.Item className="w-full">
           <Button
             type="primary"
             htmlType="submit"
-            size="large"
-            className="focus:outline-none self-end w-fit text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2  dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+            size="medium"
+            className="w-full"
+            loading={loading}
           >
             Yarat
           </Button>
         </Form.Item>
       </Form>
-      <GroupCodeModal isOpen={isOpenGroupCode} setIsOpen={setIsOpenGroupCode} />
+      {/* <GroupCodeModal isOpen={isOpenGroupCode} setIsOpen={setIsOpenGroupCode} /> */}
     </>
   );
 }

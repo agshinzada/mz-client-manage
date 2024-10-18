@@ -1,9 +1,8 @@
-import { Checkbox, Form, Select } from "antd";
+import { Checkbox, Form, Input, Select } from "antd";
 import { useEffect, useState } from "react";
 import {
   fetchDistrictByRegion,
   fetchRoutesByFilter,
-  fetchTradeGroups,
 } from "../../../services/rootService";
 import { useClient } from "../../../context/ClientContext";
 import { fetchDeliveryByFilter } from "../../../services/deliveryService";
@@ -56,6 +55,14 @@ function ParamBox() {
     <div className="flex flex-col">
       <div className="flex gap-4">
         <Form.Item
+          name="contractDayLimit"
+          label="Müqavilə üzrə gün limiti"
+          rules={[{ required: true, message: "Xananı doldurun" }]}
+          className="w-full"
+        >
+          <Input type="number" size="middle" disabled={disabled} />
+        </Form.Item>
+        <Form.Item
           name={"tradeCode"}
           label="Kanal kodu"
           className="flex flex-col w-full"
@@ -66,7 +73,7 @@ function ParamBox() {
             placeholder="Seç"
             optionFilterProp="children"
             options={tradeGroup}
-            size="large"
+            size="middle"
             filterOption={(input, option) =>
               (option?.GCODE ?? "").toLowerCase().includes(input.toLowerCase())
             }
@@ -75,12 +82,6 @@ function ParamBox() {
               value: "GCODE",
             }}
             disabled={disabled}
-            //   onChange={(e) =>
-            //     setClient((prevState) => ({
-            //       ...prevState,
-            //       clientTradeGroupCode: e.value,
-            //     }))
-            //   }
           />
         </Form.Item>
         <Form.Item
@@ -101,14 +102,8 @@ function ParamBox() {
               label: "CODE",
               value: "CODE",
             }}
-            size="large"
+            size="middle"
             disabled={disabled}
-            //   onChange={(e) =>
-            //     setClient((prevState) => ({
-            //       ...prevState,
-            //       clientTradeGroupCode: e.value,
-            //     }))
-            //   }
           />
         </Form.Item>
 
@@ -130,21 +125,17 @@ function ParamBox() {
               label: "NAME",
               value: "NAME",
             }}
-            size="large"
+            size="middle"
             disabled={disabled}
-            //   onChange={(e) =>
-            //     setClient((prevState) => ({
-            //       ...prevState,
-            //       clientTradeGroupCode: e.value,
-            //     }))
-            //   }
           />
         </Form.Item>
+      </div>
 
+      <div className="flex gap-4 ">
         <Form.Item
           name={"route"}
           label="Rut"
-          className="flex flex-col w-full"
+          className="flex flex-col w-1/4"
           rules={[{ required: true, message: "Xananı doldurun" }]}
         >
           <Select
@@ -161,29 +152,16 @@ function ParamBox() {
               label: "DEFINITION_",
               value: "CODE",
             }}
-            size="large"
+            size="middle"
             disabled={disabled}
-            //   onChange={(e) =>
-            //     setClient((prevState) => ({
-            //       ...prevState,
-            //       clientTradeGroupCode: e.value,
-            //     }))
-            //   }
           />
         </Form.Item>
-      </div>
-
-      <div>
         <Form.Item
           name={"visitDay"}
           label="Vizit günü"
           rules={[{ required: true, message: "Xananı doldurun" }]}
         >
-          <Checkbox.Group
-            options={visitDays}
-            disabled={disabled}
-            //   disabled={inputDisabled}
-          />
+          <Checkbox.Group options={visitDays} disabled={disabled} />
         </Form.Item>
       </div>
     </div>

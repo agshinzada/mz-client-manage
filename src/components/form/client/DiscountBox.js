@@ -7,16 +7,14 @@ import {
 import { useClient } from "../../../context/ClientContext";
 
 function DiscountBox() {
-  const [privateCode3, setPrivateCode3] = useState([]);
-  const [privateCode4, setPrivateCode4] = useState([]);
-  const [privateCode5, setPrivateCode5] = useState([]);
+  const [campaigns, setCampaigns] = useState([]);
   const [discounts, setDiscounts] = useState([]);
-  const { disabled } = useClient();
+  const { disabled, brandId } = useClient();
 
-  const getPrivateCode = async (param, state) => {
-    const data = await fetchCampaigns(param);
+  const getPrivateCode = async () => {
+    const data = await fetchCampaigns();
     const filterStatus = data.filter((item) => item.STATUS === 0);
-    state(filterStatus);
+    setCampaigns(filterStatus);
   };
 
   const getDiscounts = async () => {
@@ -26,9 +24,7 @@ function DiscountBox() {
   };
 
   useEffect(() => {
-    getPrivateCode(3, setPrivateCode3);
-    getPrivateCode(4, setPrivateCode4);
-    getPrivateCode(5, setPrivateCode5);
+    getPrivateCode();
     getDiscounts();
   }, []);
 
@@ -43,7 +39,11 @@ function DiscountBox() {
           showSearch
           placeholder="Seç"
           optionFilterProp="children"
-          options={discounts}
+          options={
+            brandId === 11
+              ? discounts.filter((item) => item.BRAND_ID === brandId)
+              : discounts.filter((item) => item.BRAND_ID === 0)
+          }
           filterOption={(input, option) =>
             (option?.LABEL ?? "").toLowerCase().includes(input.toLowerCase())
           }
@@ -51,14 +51,8 @@ function DiscountBox() {
             label: "LABEL",
             value: "VALUE",
           }}
-          size="large"
+          size="middle"
           disabled={disabled}
-          //   onChange={(e) =>
-          //     setClient((prevState) => ({
-          //       ...prevState,
-          //       clientTradeGroupCode: e.value,
-          //     }))
-          //   }
         />
       </Form.Item>
       <Form.Item
@@ -71,7 +65,7 @@ function DiscountBox() {
           showSearch
           placeholder="Seç"
           optionFilterProp="children"
-          options={privateCode3}
+          options={campaigns.filter((item) => item.TYPE_ === 3)}
           filterOption={(input, option) =>
             (option?.CODE ?? "").toLowerCase().includes(input.toLowerCase())
           }
@@ -79,14 +73,8 @@ function DiscountBox() {
             label: "CODE",
             value: "VALUE",
           }}
-          size="large"
+          size="middle"
           disabled={disabled}
-          //   onChange={(e) =>
-          //     setClient((prevState) => ({
-          //       ...prevState,
-          //       clientTradeGroupCode: e.value,
-          //     }))
-          //   }
         />
       </Form.Item>
       <Form.Item
@@ -99,7 +87,7 @@ function DiscountBox() {
           showSearch
           placeholder="Seç"
           optionFilterProp="children"
-          options={privateCode4}
+          options={campaigns.filter((item) => item.TYPE_ === 4)}
           filterOption={(input, option) =>
             (option?.CODE ?? "").toLowerCase().includes(input.toLowerCase())
           }
@@ -107,14 +95,8 @@ function DiscountBox() {
             label: "CODE",
             value: "VALUE",
           }}
-          size="large"
+          size="middle"
           disabled={disabled}
-          //   onChange={(e) =>
-          //     setClient((prevState) => ({
-          //       ...prevState,
-          //       clientTradeGroupCode: e.value,
-          //     }))
-          //   }
         />
       </Form.Item>
       <Form.Item
@@ -127,7 +109,7 @@ function DiscountBox() {
           showSearch
           placeholder="Seç"
           optionFilterProp="children"
-          options={privateCode5}
+          options={campaigns.filter((item) => item.TYPE_ === 5)}
           filterOption={(input, option) =>
             (option?.CODE ?? "").toLowerCase().includes(input.toLowerCase())
           }
@@ -135,14 +117,8 @@ function DiscountBox() {
             label: "CODE",
             value: "VALUE",
           }}
-          size="large"
+          size="middle"
           disabled={disabled}
-          //   onChange={(e) =>
-          //     setClient((prevState) => ({
-          //       ...prevState,
-          //       clientTradeGroupCode: e.value,
-          //     }))
-          //   }
         />
       </Form.Item>
     </div>

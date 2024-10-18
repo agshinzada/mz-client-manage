@@ -1,4 +1,4 @@
-import { Form, Select } from "antd";
+import { Form, Input, Select } from "antd";
 import { fetchDistrictByRegion } from "../../../services/rootService";
 import { useGlobal } from "../../../context/GlobalContext";
 import { useEffect, useState } from "react";
@@ -23,6 +23,21 @@ function ParamBox() {
   return (
     <div className="flex gap-4">
       <Form.Item
+        name="taxObjectCode"
+        label="Vergi obyekt kodu"
+        className="w-full"
+      >
+        <Input type="text" maxLength={10} size="middle" disabled={disabled} />
+      </Form.Item>
+      <Form.Item
+        name="dayLimit"
+        label="Gün limiti"
+        rules={[{ required: true, message: "Xananı doldurun" }]}
+        className="w-full"
+      >
+        <Input type="number" size="middle" disabled={disabled} />
+      </Form.Item>
+      <Form.Item
         name={"tradeCode"}
         label="Kanal kodu"
         className="flex flex-col w-full"
@@ -36,7 +51,7 @@ function ParamBox() {
           filterOption={(input, option) =>
             (option?.GCODE ?? "").toLowerCase().includes(input.toLowerCase())
           }
-          size="large"
+          size="middle"
           fieldNames={{
             label: "GCODE",
             value: "GCODE",
@@ -62,7 +77,7 @@ function ParamBox() {
             label: "NAME",
             value: "NAME",
           }}
-          size="large"
+          size="middle"
           disabled={disabled}
         />
       </Form.Item>

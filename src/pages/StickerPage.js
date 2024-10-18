@@ -10,17 +10,24 @@ function StickerPage() {
   const { createdCode } = useSticker();
 
   return (
-    <>
-      <CreateStickerCodeForm />
-      <div className="p-3 mb-6 border dark:text-slate-200 bg-white border-slate-200 dark:border-slate-600 dark:bg-gray-800 rounded-lg mx-auto w-[25rem] h-10 flex justify-center items-center">
-        <Spin spinning={loading}>
-          <span className="font-bold">{createdCode}</span>
+    <div className="flex gap-2 justify-center">
+      <div className="w-1/4 border p-4 h-fit">
+        <p className="font-bold text-center mb-5">KOD</p>
+        <CreateStickerCodeForm />
+      </div>
+      <div className="border p-4 w-full">
+        <p className="font-bold text-center mb-[3.2rem]">STİKER MƏLUMATLARI</p>
+
+        <div className="p-3 mb-6 border dark:text-slate-200 bg-white border-slate-200 rounded-lg min-w-[10rem] w-fit h-7 flex justify-center items-center">
+          <Spin spinning={loading}>
+            <span className="font-bold">{createdCode}</span>
+          </Spin>
+        </div>
+        <Spin size="default" spinning={loading}>
+          <StickerForm />
         </Spin>
       </div>
-      <Spin size="large" spinning={loading}>
-        <StickerForm />
-      </Spin>
-    </>
+    </div>
   );
 }
 

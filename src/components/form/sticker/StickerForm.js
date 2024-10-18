@@ -8,7 +8,7 @@ import { useAuth } from "../../../context/AuthContext";
 
 function StickerForm() {
   const { user } = useAuth();
-  const { setLoading } = useGlobal();
+  const { setLoading, loading } = useGlobal();
   const { disabled, createdCode, regionName, setDisabled, selectedGroupCode } =
     useSticker();
   const [form] = Form.useForm();
@@ -29,23 +29,15 @@ function StickerForm() {
       data.LOWLEVELCODES2 = 0;
       data.LOWLEVELCODES3 = 0;
     }
-    console.log({
-      sticker: data,
-      userRef: user.REF,
-      token: user.TOKEN,
-    });
-
     const res = await fetchNewSticker({
       sticker: data,
       userRef: user.REF,
       token: user.TOKEN,
     });
     if (res) {
-      setTimeout(() => {
-        setLoading(false);
-        setDisabled(true);
-        form.resetFields();
-      }, 700);
+      setLoading(false);
+      setDisabled(true);
+      form.resetFields();
     } else {
       setLoading(false);
     }
@@ -66,15 +58,15 @@ function StickerForm() {
     >
       <DetailBox />
       <ParamBox />
-      <Form.Item>
+      <Form.Item className="flex justify-end">
         <Button
           type="primary"
           htmlType="submit"
-          size="large"
-          className="text-white disabled:bg-gray-400  bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 mt-6 w-full dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+          size="middle"
           disabled={disabled}
+          loading={loading}
         >
-          Göndər
+          Əlavə et
         </Button>
       </Form.Item>
     </Form>

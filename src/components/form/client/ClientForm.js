@@ -6,6 +6,7 @@ import { useClient } from "../../../context/ClientContext";
 import { useEffect } from "react";
 import { useAuth } from "../../../context/AuthContext";
 import { fetchNewClient } from "../../../services/clientService";
+import { useGlobal } from "../../../context/GlobalContext";
 
 function ClientForm() {
   const [form] = Form.useForm();
@@ -15,13 +16,12 @@ function ClientForm() {
     createStatus,
     disabled,
     setDisabled,
-    setLoading,
     createdCode,
     brandId,
     regionName,
-    loading,
     setCreateStatus,
   } = useClient();
+  const { setLoading, loading } = useGlobal();
 
   useEffect(() => {
     if (createStatus) {
@@ -36,6 +36,7 @@ function ClientForm() {
         tradeCode: selectedSticker.TRADINGGRP,
         district: selectedSticker.DISTRICT,
         taxObjectCode: selectedSticker.TAXOFFICE,
+        discount: "",
       });
     }
   }, [createStatus]);
@@ -54,12 +55,10 @@ function ClientForm() {
       token: user.TOKEN,
     });
     if (res) {
-      setTimeout(() => {
-        setLoading(false);
-        setDisabled(true);
-        form.resetFields();
-        setCreateStatus(false);
-      }, 700);
+      setLoading(false);
+      setDisabled(true);
+      form.resetFields();
+      setCreateStatus(false);
     } else {
       setLoading(false);
       setCreateStatus(false);
@@ -67,38 +66,36 @@ function ClientForm() {
   };
 
   return (
-    <Spin spinning={loading}>
-      <Form
-        form={form}
-        layout="vertical"
-        onFinish={submitClient}
-        className="flex flex-col"
-        initialValues={{
-          num1: "",
-          num2: "",
-          taxObjectCode: "",
-          contactPerson: "",
-          discount: "",
-        }}
-      >
-        <div className="flex flex-col gap-2">
-          <DetailBox />
-          <ParamBox />
-          <DiscountBox />
-          <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              size="large"
-              className="text-white disabled:bg-gray-400  bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 mt-6 w-full dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-              disabled={disabled}
-            >
-              Göndər
-            </Button>
-          </Form.Item>
-        </div>
-      </Form>
-    </Spin>
+    <Form
+      form={form}
+      layout="vertical"
+      onFinish={submitClient}
+      className="flex flex-col"
+      initialValues={{
+        num1: "",
+        num2: "",
+        taxObjectCode: "",
+        contactPerson: "",
+        discount: "",
+      }}
+    >
+      <div className="flex flex-col gap-1">
+        <DetailBox />
+        <ParamBox />
+        <DiscountBox />
+        <Form.Item className="flex justify-end">
+          <Button
+            type="primary"
+            htmlType="submit"
+            size="medium"
+            disabled={disabled}
+            loading={loading}
+          >
+            Əlavə et
+          </Button>
+        </Form.Item>
+      </div>
+    </Form>
   );
 }
 

@@ -9,7 +9,11 @@ import { useGlobal } from "./context/GlobalContext";
 import { ClientProvider } from "./context/ClientContext";
 import { StickerProvider } from "./context/StickerContext";
 import { fetchGroupCodes } from "./services/groupService";
-import Layout from "./layout/Layout";
+import MainLayout from "./layout/Layout";
+import EditClientPage from "./pages/EditClientPage";
+import EditTaxPage from "./pages/EditTaxPage";
+import RoutePage from "./pages/RoutePage";
+import InsertedClientsPage from "./pages/InsertedClientsPage";
 
 function App() {
   const { setTradeGroup, setRegions, setGroupCodes } = useGlobal();
@@ -38,7 +42,7 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<Layout />}>
+      <Route path="/" element={<MainLayout />}>
         <Route
           index
           element={
@@ -55,6 +59,10 @@ function App() {
             </StickerProvider>
           }
         />
+        <Route path="clients/edit" element={<EditClientPage />} />
+        <Route path="clients/tax/edit" element={<EditTaxPage />} />
+        <Route path="routes" element={<RoutePage />} />
+        <Route path="inserted" element={<InsertedClientsPage />} />
       </Route>
     </Routes>
   );

@@ -1,11 +1,10 @@
-import { UnorderedListOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Select } from "antd";
+import { Button, Form, Select, Space } from "antd";
 import { useEffect, useState } from "react";
 import { fetchBrands } from "../../../services/brandService";
 import { fetchGroupTypes } from "../../../services/groupService";
 import { useClient } from "../../../context/ClientContext";
 import { useGlobal } from "../../../context/GlobalContext";
-import SelectStickerModal from "../../modals/sticker/SelectStickerModal";
+import { fetchStickerBySearch } from "../../../services/stickerService";
 
 function CreateClientCodeForm() {
   const [brands, setBrands] = useState([]);
@@ -15,22 +14,20 @@ function CreateClientCodeForm() {
     selectedSticker,
     setBrandId,
     setCreatedCode,
-    setLoading,
     setRegionName,
     setCreateStatus,
     setRegionId,
     regionCodeId,
     setDisabled,
     setRegionCodeId,
+    setSelectedSticker,
   } = useClient();
-  const { regions } = useGlobal();
+  const { regions, loading, setLoading } = useGlobal();
 
   // FORM
   const [clientTypeCode, setClientTypeCode] = useState(null);
   const [brandCode, setBrandCode] = useState(null);
-
-  // MODAL
-  const [isOpenSticker, setIsOpenSticker] = useState(false);
+  const [stickers, setStickers] = useState([]);
 
   const getBrands = async () => {
     const data = await fetchBrands();
@@ -55,16 +52,21 @@ function CreateClientCodeForm() {
     }
   };
 
+  async function getStickers(param) {
+    const res = await fetchStickerBySearch(param);
+    setStickers(res);
+  }
+
   const submitCode = async () => {
     try {
       setLoading(true);
       const code = `211${regionCodeId}.${brandCode}.${clientTypeCode}.${selectedSticker.CODE}`;
+      setCreatedCode(code);
       setTimeout(() => {
-        setCreatedCode(code);
         setLoading(false);
         setCreateStatus(true);
         setDisabled(false);
-      }, 700);
+      }, 500);
     } catch (error) {
       console.log(error);
     }
@@ -75,17 +77,13 @@ function CreateClientCodeForm() {
     getClientTypes();
   }, []);
 
-  useEffect(() => {
-    form.setFieldValue("sticker", selectedSticker.CODE);
-  }, [selectedSticker]);
-
   return (
     <>
       <Form
         form={form}
         layout="vertical"
         onFinish={submitCode}
-        className="flex gap-5  items-center"
+        className="flex flex-col items-center"
       >
         <Form.Item
           name={"region"}
@@ -105,7 +103,7 @@ function CreateClientCodeForm() {
               label: "NAME",
               value: "ID",
             }}
-            size="large"
+            size="middle"
             onSelect={(e) => {
               const regName = regions.find((item) => item.ID === e).NAME;
               const regId = regions.find((item) => item.ID === e).ROOT_ID;
@@ -137,7 +135,7 @@ function CreateClientCodeForm() {
               label: "NAME",
               value: "ID",
             }}
-            size="large"
+            size="middle"
             onSelect={(e) => {
               handleBrand(e);
               setCreateStatus(false);
@@ -163,7 +161,7 @@ function CreateClientCodeForm() {
               label: "NAME",
               value: "ABBR",
             }}
-            size="large"
+            size="middle"
             onSelect={(e) => {
               setCreateStatus(false);
               setDisabled(true);
@@ -177,8 +175,37 @@ function CreateClientCodeForm() {
           className="flex flex-col w-full"
           rules={[{ required: true, message: "Stiker daxil edin" }]}
         >
-          <div className="flex relative">
-            <Input size="large" placeholder={selectedSticker.CODE} disabled />
+          <Select
+            showSearch
+            placeholder="Seç"
+            optionFilterProp="children"
+            filterOption={false}
+            options={stickers}
+            fieldNames={{
+              label: "CODE",
+              value: "CODE",
+            }}
+            onSearch={(param) => {
+              if (param !== "") {
+                getStickers(param);
+              }
+            }}
+            size="middle"
+            optionRender={(option) => (
+              <Space>
+                <span role="img" aria-label={option.label}>
+                  {option.data.CODE} -
+                </span>
+                {option.data.DEFINITION}
+              </Space>
+            )}
+            onSelect={(value, option) => {
+              setSelectedSticker(option);
+              setDisabled(true);
+            }}
+          />
+          {/* <div className="flex relative">
+            <Input size="middle" placeholder={selectedSticker.CODE} disabled />
             <Button
               icon={<UnorderedListOutlined />}
               className="absolute right-0 h-full rounded-none bg-white disabled:bg-gray-100"
@@ -188,15 +215,21 @@ function CreateClientCodeForm() {
                 setIsOpenSticker(true);
               }}
             />
-          </div>
+          </div> */}
         </Form.Item>
-        <Form.Item className="m-0">
-          <Button type="primary" size="large" htmlType="submit">
+        <Form.Item className="w-full">
+          <Button
+            type="primary"
+            size="middle"
+            htmlType="submit"
+            className="w-full"
+            loading={loading}
+          >
             Yarat
           </Button>
         </Form.Item>
       </Form>
-      <SelectStickerModal isOpen={isOpenSticker} setIsOpen={setIsOpenSticker} />
+      {/* <SelectStickerModal isOpen={isOpenSticker} setIsOpen={setIsOpenSticker} /> */}
     </>
   );
 }

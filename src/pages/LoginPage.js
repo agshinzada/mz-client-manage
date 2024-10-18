@@ -4,49 +4,101 @@ import { useAuth } from "../context/AuthContext";
 import { encryptStorage } from "../utils/storage";
 import { fetchLogin } from "../services/authService";
 import MainFooter from "../components/Footer";
+import logo from "../assets/logo.svg";
+import { Button, Form, Input } from "antd";
 
 function LoginPage() {
   const { setUser } = useAuth();
+  const [loading, setLoading] = useState(false);
   var hash = require("hash.js");
   const navigate = useNavigate();
-  const [username, setUsername] = useState(null);
-  const [hashPassword, setHashPassword] = useState(null);
-  const [successDiv, setSuccessDiv] = useState(false);
-  const [warningDiv, setWarningDiv] = useState(false);
-  const [warning, setWarning] = useState("");
 
-  const loginHandle = async (e) => {
+  const onFinish = async (params) => {
     try {
-      e.preventDefault();
-      const res = await fetchLogin(username, hashPassword);
-      if (res.status === 200 && res.statusText === "OK") {
-        const data = await res.json();
-        setWarningDiv(false);
-        setSuccessDiv(true);
-        setTimeout(() => {
-          encryptStorage.setItem("user", data);
-          setUser(data);
-          navigate("/");
-        }, 700);
-      } else if (res.status === 500) {
-        setWarning(res.statusText);
-        setSuccessDiv(false);
-        setWarningDiv(true);
-      } else if (res.status === 401) {
-        setWarning(await res.text());
-        setSuccessDiv(false);
-        setWarningDiv(true);
+      setLoading(true);
+      const hassPass = hash.sha256().update(params.password).digest("hex");
+      const res = await fetchLogin({
+        username: params.username,
+        password: hassPass,
+      });
+      if (res) {
+        setUser(res);
+        encryptStorage.setItem("user", res);
+        navigate("/");
+      } else {
+        console.log("error", res);
       }
+      setLoading(false);
     } catch (error) {
-      setWarning("Server error!");
-      setSuccessDiv(false);
-      setWarningDiv(true);
+      console.log(error);
     }
   };
 
   return (
-    <div className="grid-rows-1 flex-col grid items-center h-screen w-full bg-slate-100">
-      <div className="w-full bg-white rounded shadow-lg p-8 m-4 md:max-w-sm md:mx-auto self-center">
+    <div className="flex flex-col justify-between items-center h-screen w-full bg-slate-100">
+      <div className="bg-white p-16 rounded-md my-auto">
+        <div className="flex items-center justify-center gap-2 px-3 py-5 mb-7">
+          <img src={logo} alt="logo" className="w-10" />
+          <h1 className="text-gray-600 text-xl font-bold">
+            Müştəri İdarəetmə Paneli
+          </h1>
+        </div>
+        <Form
+          name="basic"
+          labelCol={{
+            span: 8,
+          }}
+          wrapperCol={{
+            span: 16,
+          }}
+          style={{
+            maxWidth: 600,
+          }}
+          initialValues={{
+            remember: false,
+          }}
+          onFinish={onFinish}
+          autoComplete="off"
+        >
+          <Form.Item
+            label="Username"
+            name="username"
+            rules={[
+              {
+                required: true,
+                message: "Please input your username!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Password"
+            name="password"
+            rules={[
+              {
+                required: true,
+                message: "Please input your password!",
+              },
+            ]}
+          >
+            <Input.Password />
+          </Form.Item>
+
+          <Form.Item
+            wrapperCol={{
+              offset: 8,
+              span: 16,
+            }}
+          >
+            <Button type="primary" htmlType="submit" loading={loading}>
+              Log in
+            </Button>
+          </Form.Item>
+        </Form>
+      </div>
+
+      {/* <div className="w-full bg-white rounded shadow-lg p-8 m-4 md:max-w-sm md:mx-auto self-center">
         <span className="block w-full text-xl uppercase font-bold mb-4">
           GİRİŞ
         </span>
@@ -105,7 +157,7 @@ function LoginPage() {
             login
           </button>
         </form>
-      </div>
+      </div> */}
       <MainFooter />
     </div>
   );

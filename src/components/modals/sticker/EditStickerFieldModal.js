@@ -1,6 +1,6 @@
 import { Button, Form, Input, Modal } from "antd";
 
-function EditStickerFieldModal({ isOpen, setIsOpen, handleSubmit }) {
+function EditStickerFieldModal({ isOpen, setIsOpen, handleSubmit, loading }) {
   const [form] = Form.useForm();
 
   return (
@@ -23,10 +23,11 @@ function EditStickerFieldModal({ isOpen, setIsOpen, handleSubmit }) {
         </Form.Item>
         <Form.Item>
           <Button
-            size="large"
+            size="middle"
             type="primary"
             htmlType="submit"
             className="w-full"
+            loading={loading}
           >
             Göndər
           </Button>

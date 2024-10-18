@@ -1,117 +1,77 @@
+import { notification } from "antd";
+import axios from "axios";
+
 export const fetchTradeGroups = async () => {
   try {
-    const res = await fetch(`${process.env.REACT_APP_API}/root/trade`);
-    if (res.status === 200 && res.statusText === "OK") {
-      const data = await res.json();
-      return data;
-    } else if (res.status === 500) {
-      console.log(await res.json());
-    }
+    const res = await axios.get(`${process.env.REACT_APP_API}/root/trade`);
+    return res.data;
   } catch (error) {
-    throw error;
-  }
-};
-
-export const fetchTradeGroupBySearch = async (value) => {
-  try {
-    const res = await fetch(
-      `${process.env.REACT_APP_API}/root/trade/search?q=${value}`
-    );
-    if (res.status === 200 && res.statusText === "OK") {
-      const data = await res.json();
-      return data;
-    } else if (res.status === 500) {
-      console.log(await res.json());
-    }
-  } catch (error) {
-    throw error;
+    notification.info({
+      message: error.response.data,
+    });
   }
 };
 
 export const fetchDistrictByRegion = async (value) => {
   try {
-    const res = await fetch(
+    const res = await axios.get(
       `${process.env.REACT_APP_API}/root/districts?name=${value}`
     );
-    if (res.status === 200 && res.statusText === "OK") {
-      const data = await res.json();
-      return data;
-    } else if (res.status === 500) {
-      console.log(await res.json());
-    }
+    return res.data;
   } catch (error) {
-    throw error;
+    notification.info({
+      message: error.response.data,
+    });
   }
 };
 
 export const fetchRoutes = async () => {
   try {
-    const res = await fetch(`${process.env.REACT_APP_API}/root/routes`);
-    if (res.status === 200 && res.statusText === "OK") {
-      const data = await res.json();
-      return data;
-    } else if (res.status === 500) {
-      console.log(await res.json());
-    }
+    const res = await axios.get(`${process.env.REACT_APP_API}/root/routes`);
+    return res.data;
   } catch (error) {
-    throw error;
+    notification.info({
+      message: error.response.data,
+    });
   }
 };
 
 export const fetchRoutesByFilter = async (regionId, brandId) => {
   try {
-    const res = await fetch(
+    const res = await axios.get(
       `${process.env.REACT_APP_API}/root/routes/filter?r=${regionId}&b=${brandId}`
     );
-    if (res.status === 200 && res.statusText === "OK") {
-      const data = await res.json();
-      return data;
-    } else if (res.status === 500) {
-      console.log(await res.json());
-    }
+    return res.data;
   } catch (error) {
-    throw error;
+    notification.info({
+      message: error.response.data,
+    });
   }
 };
 
 export const fetchRoutesBySearch = async (value) => {
   try {
-    const res = await fetch(
+    const res = await axios.get(
       `${process.env.REACT_APP_API}/root/routes/search?code=${value}`
     );
-    if (res.status === 200 && res.statusText === "OK") {
-      const data = await res.json();
-      return data;
-    } else if (res.status === 500) {
-      console.log(await res.json());
-    }
+    return res.data;
   } catch (error) {
-    throw error;
+    notification.info({
+      message: error.response.data,
+    });
   }
 };
 
-export const fetchLowlevelcode = async (sticker, levelCode) => {
+export const fetchLowlevelcode = async (data, levelCode) => {
   try {
-    const res = await fetch(
+    const res = await axios.post(
       `${process.env.REACT_APP_API}/root/lowlevel${levelCode}`,
-      {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(sticker),
-      }
+      data
     );
-    if (res.status === 200 && res.statusText === "OK") {
-      const data = await res.json();
-      return data;
-    } else if (res.status === 400) {
-      console.log(await res.text());
-    } else if (res.status === 500) {
-      console.log(res);
-    }
+    return res.data;
   } catch (error) {
-    throw error;
+    notification.info({
+      message: error.response.data,
+    });
   }
 };

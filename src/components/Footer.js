@@ -12,7 +12,9 @@ function MainFooter(props) {
       }}
       {...props}
     >
-      Mazarina Trade Company ©{new Date().getFullYear()}
+      <p className="text-[13px]">
+        Mazarina Trade Company ©{new Date().getFullYear()} v2.0.0
+      </p>
       <a href="https://agshin.dev/">
         <img src="/powered.svg" alt="logo" style={{ width: "80px" }} />
       </a>
