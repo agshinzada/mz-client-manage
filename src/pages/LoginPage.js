@@ -6,20 +6,23 @@ import { fetchLogin } from "../services/authService";
 import MainFooter from "../components/Footer";
 import logo from "../assets/logo.svg";
 import { Button, Form, Input } from "antd";
+import bcrypt from "bcryptjs";
 
 function LoginPage() {
   const { setUser } = useAuth();
   const [loading, setLoading] = useState(false);
-  var hash = require("hash.js");
   const navigate = useNavigate();
 
   const onFinish = async (params) => {
     try {
       setLoading(true);
-      const hassPass = hash.sha256().update(params.password).digest("hex");
+      const hashedPass = bcrypt.hashSync(
+        params.password,
+        "$2a$10$CwTycUXWue0Thq9StjUM0u"
+      );
       const res = await fetchLogin({
         username: params.username,
-        password: hassPass,
+        password: hashedPass,
       });
       if (res) {
         setUser(res);
