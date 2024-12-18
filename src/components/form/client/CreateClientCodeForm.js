@@ -45,8 +45,8 @@ function CreateClientCodeForm() {
     try {
       const filterCode = brands.find((item) => item.ID === e);
       const filterNR = brands.find((item) => item.ID === e);
-      setBrandCode(filterCode.TYPE + filterCode.CODE);
-      setBrandId(filterNR.NR);
+      setBrandCode(filterCode.BRAND_TYPE + filterCode.BRAND_CODE);
+      setBrandId(filterNR.SYS_ID);
     } catch (error) {
       console.log(error);
     }
@@ -106,7 +106,7 @@ function CreateClientCodeForm() {
             size="middle"
             onSelect={(e) => {
               const regName = regions.find((item) => item.ID === e).NAME;
-              const regId = regions.find((item) => item.ID === e).ROOT_ID;
+              const regId = regions.find((item) => item.ID === e).SYS_ID;
               const regCodeId = regions.find((item) => item.ID === e).CODE_ID;
               setRegionName(regName);
               setRegionId(regId);
@@ -204,18 +204,6 @@ function CreateClientCodeForm() {
               setDisabled(true);
             }}
           />
-          {/* <div className="flex relative">
-            <Input size="middle" placeholder={selectedSticker.CODE} disabled />
-            <Button
-              icon={<UnorderedListOutlined />}
-              className="absolute right-0 h-full rounded-none bg-white disabled:bg-gray-100"
-              onClick={() => {
-                setCreateStatus(false);
-                setDisabled(true);
-                setIsOpenSticker(true);
-              }}
-            />
-          </div> */}
         </Form.Item>
         <Form.Item className="w-full">
           <Button
@@ -229,7 +217,6 @@ function CreateClientCodeForm() {
           </Button>
         </Form.Item>
       </Form>
-      {/* <SelectStickerModal isOpen={isOpenSticker} setIsOpen={setIsOpenSticker} /> */}
     </>
   );
 }

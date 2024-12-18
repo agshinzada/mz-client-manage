@@ -1,4 +1,4 @@
-import { Button, Modal, Space, Table, Tag } from "antd";
+import { Modal, Space, Table, Tag } from "antd";
 
 function HierarchyModal({ isOpen, setIsOpen, data }) {
   const columns = [
