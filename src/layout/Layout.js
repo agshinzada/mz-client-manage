@@ -14,6 +14,7 @@ import {
   UserAddOutlined,
   UsergroupAddOutlined,
 } from "@ant-design/icons";
+import { useGlobal } from "../context/GlobalContext";
 
 const menuItems = [
   {
@@ -51,27 +52,69 @@ const menuItems = [
 function MainLayout() {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { menuItemId, setMenuItemId } = useGlobal();
 
   function handleMenu(params) {
-    localStorage.setItem("menuId", params.key);
     switch (parseInt(params.key)) {
       case 1:
+        localStorage.setItem(
+          "menuItem",
+          JSON.stringify({ id: params.key, target: "/" })
+        );
+        setMenuItemId(params.key);
         navigate("/");
         break;
       case 2:
-        navigate("/sticker");
+        localStorage.setItem(
+          "menuItem",
+          JSON.stringify({
+            id: params.key,
+            target: "/sticker",
+          })
+        );
+        setMenuItemId(params.key);
+        navigate("sticker");
         break;
       case 3:
-        navigate("/clients/edit");
+        localStorage.setItem(
+          "menuItem",
+          JSON.stringify({
+            id: params.key,
+            target: "/clients/edit",
+          })
+        );
+        setMenuItemId(params.key);
+        navigate("clients/edit");
         break;
       case 4:
-        navigate("/clients/tax/edit");
+        localStorage.setItem(
+          "menuItem",
+          JSON.stringify({
+            id: params.key,
+            target: "/clients/tax/edit",
+          })
+        );
+        setMenuItemId(params.key);
+        navigate("clients/tax/edit");
         break;
       case 5:
-        navigate("/routes");
+        localStorage.setItem(
+          "menuItem",
+          JSON.stringify({ id: params.key, target: "/routes" })
+        );
+        setMenuItemId(params.key);
+        navigate("routes");
         break;
       case 6:
-        navigate("/inserted");
+        localStorage.setItem(
+          "menuItem",
+          JSON.stringify({
+            id: params.key,
+            target: "/inserted",
+          })
+        );
+        setMenuItemId(params.key);
+        navigate("inserted");
         break;
 
       default:
@@ -91,7 +134,6 @@ function MainLayout() {
       }).then(async (result) => {
         if (result.isConfirmed) {
           encryptStorage.clear();
-          localStorage.clear();
           navigate("auth/login");
         }
       });
@@ -117,7 +159,8 @@ function MainLayout() {
         <Menu
           theme="dark"
           mode="horizontal"
-          defaultSelectedKeys={[localStorage.getItem("menuId") || "1"]}
+          defaultSelectedKeys={[menuItemId.toString() || "1"]}
+          selectedKeys={[menuItemId.toString()]}
           items={menuItems}
           style={{
             flex: 1,

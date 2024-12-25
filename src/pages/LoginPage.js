@@ -27,7 +27,9 @@ function LoginPage() {
       if (res) {
         setUser(res);
         encryptStorage.setItem("user", res);
-        navigate("/");
+        const target =
+          JSON.parse(localStorage.getItem("menuItem"))?.target || "/";
+        navigate(target);
       } else {
         console.log("error", res);
       }
