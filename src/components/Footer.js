@@ -13,7 +13,8 @@ function MainFooter(props) {
       {...props}
     >
       <p className="text-[13px]">
-        Mazarina Trade Company ©{new Date().getFullYear()} v2.0.0
+        Mazarina Trade Company ©{new Date().getFullYear()} v
+        {process.env.REACT_APP_VERSION}
       </p>
       <a href="https://agshin.dev/">
         <img src="/powered.svg" alt="logo" style={{ width: "80px" }} />
