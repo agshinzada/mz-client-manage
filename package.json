@@ -1,5 +1,6 @@
 {
-  "name": "newclient",
+  "name": "mz-client-manage",
+  "description": "Client Management is used to create new clients for the database and edit existing client information. Client codes are dynamically generated, and various duplication tests are performed during the addition process to ensure that the client codes are unique.",
   "version": "2.0.1",
   "private": true,
   "dependencies": {
