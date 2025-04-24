@@ -60,7 +60,8 @@ function CreateClientCodeForm() {
   const submitCode = async () => {
     try {
       setLoading(true);
-      const code = `211${regionCodeId}.${brandCode}.${clientTypeCode}.${selectedSticker.CODE}`;
+      const stikerCode = selectedSticker.CODE.split(".")[0];
+      const code = `211${regionCodeId}.${brandCode}.${clientTypeCode}.${stikerCode}`;
       setCreatedCode(code);
       setTimeout(() => {
         setLoading(false);
